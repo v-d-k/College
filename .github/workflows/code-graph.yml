@@ -1,0 +1,24 @@
+name: Code Graph
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install graphviz
+
+      - name: Generate code graph
+        run: |
+          pip install pyan
+          pyan --dot --no-defines -f html -n -r . -o graph.html
